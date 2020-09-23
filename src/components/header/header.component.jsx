@@ -39,10 +39,12 @@ const Header = () => {
             </span>
           </div>
         </Link>
-        <div className="header__option">
-          <span className="header__optionLineOne">Returns</span>
-          <span className="header__optionLineTwo">& Orders</span>
-        </div>
+        <Link to="/orders">
+          <div className="header__option">
+            <span className="header__optionLineOne">Returns</span>
+            <span className="header__optionLineTwo">& Orders</span>
+          </div>
+        </Link>
         <div className="header__option">
           <span className="header__optionLineOne">Your</span>
           <span className="header__optionLineTwo">Prime</span>
@@ -51,11 +53,6 @@ const Header = () => {
           <div className="header_optionBasket">
             <ShoppingBasketIcon />
             <span className="header__optionLineTwo header__basketCount">
-              {/* 
-                The ? here is the `optional chaining` which for some reason does not 
-                have the correct value or basket becomes undefined due to an error, 
-                then the program will terminate gracefully.
-              */}
               {basket?.length}
             </span>
           </div>

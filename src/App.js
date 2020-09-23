@@ -7,23 +7,27 @@ import Checkout from "./components/checkout/checkout.component";
 import Login from "./components/login/login.component";
 import { auth } from "./firebase/firebase";
 import { useStateValue } from "./provider/state-provider";
+import Payment from "./components/payment/payment.component";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import Orders from "./components/orders/orders.component";
+
+const promise = loadStripe(
+  "pk_test_51HI7xqG8udYDD9WQSdonTBpn0AN1C4qG5QhOkzL2LNZzH6WYIhGsPGMnqiZyTPsuYZ3qFnBAxBreaUmLcfyh2Ih200JbRUyTVb"
+);
 
 function App() {
   const [{}, dispatch] = useStateValue();
 
   useEffect(() => {
-    // will only run once when the App component loads if the second argument array is empty.
-    // Otherwise it runs every time there is any change in the argument value change.
     auth.onAuthStateChanged((authUser) => {
       console.log("The user is >>> ", authUser);
       if (authUser) {
-        // the user just logged in / the user was logged in.
         dispatch({
           type: "SET_USER",
           user: authUser,
         });
       } else {
-        // the user is logged out.
         dispatch({
           type: "SET_USER",
           user: null,
@@ -33,7 +37,6 @@ function App() {
   }, []);
 
   return (
-    // BEM
     <Router>
       <div className="app">
         <Switch>
@@ -42,12 +45,21 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/login">
-            {/* No need of header when rendering a login page. */}
             <Login />
           </Route>
           <Route path="/checkout">
             <Header />
             <Checkout />
+          </Route>
+          <Route path="/payment">
+            <Header />
+            <Elements stripe={promise}>
+              <Payment />
+            </Elements>
+          </Route>
+          <Route path="/orders">
+            <Header />
+            <Orders />
           </Route>
         </Switch>
       </div>

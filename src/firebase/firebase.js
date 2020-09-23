@@ -12,9 +12,7 @@ const firebaseConfig = {
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-// Firestore is the realtime database.
 const db = firebaseApp.firestore();
-// gives us a variable which we can use to handle sign in and more.
 const auth = firebase.auth();
 
 export { db, auth };
